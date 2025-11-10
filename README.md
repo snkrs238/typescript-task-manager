@@ -32,13 +32,28 @@
 ```
 src/
 ├── index.ts          # CLI エントリーポイント
+├── server.ts         # Express.js Webサーバー
 ├── taskManager.ts    # ビジネスロジック層
 ├── storage.ts        # データ永続化層
 └── types.ts          # 型定義・インターフェース
 
+public/
+├── index.html        # メインHTML（モダンなUI）
+└── app.js            # フロントエンドJavaScript
+
 tests/
 ├── taskManager.test.ts  # ビジネスロジックのテスト
 └── storage.test.ts      # ストレージ層のテスト
+```
+
+### API エンドポイント
+
+```
+GET    /api/tasks              # タスク一覧取得（filter: all|completed|pending）
+POST   /api/tasks              # タスク追加
+PATCH  /api/tasks/:id/toggle   # 完了状態切り替え
+DELETE /api/tasks/:id          # タスク削除
+DELETE /api/tasks/completed    # 完了済みタスク一括削除
 ```
 
 ## 🚀 インストール
@@ -55,7 +70,29 @@ npm install
 npm run build
 ```
 
-## 📖 使い方
+## 🌐 Web UI の起動
+
+### 開発モード
+```bash
+npm run dev:server
+```
+
+### 本番モード
+```bash
+npm run build
+npm run server
+```
+
+ブラウザで `http://localhost:3000` を開くと、モダンなWeb UIでタスク管理ができます。
+
+### Web UI の機能
+- 📱 **レスポンシブデザイン**: モバイルからデスクトップまで対応
+- 🎨 **モダンなUI**: グラデーション背景と滑らかなアニメーション
+- 📊 **リアルタイム統計**: 総タスク・完了・未完了の数を表示
+- 🔍 **フィルタリング**: すべて・未完了・完了済みでフィルター
+- ⚡ **高速**: REST APIによる非同期通信
+
+## 📖 使い方（CLI版）
 
 ### タスクの追加
 ```bash
@@ -138,8 +175,15 @@ npm run watch
 ### コア技術
 - **TypeScript 5.0+** - 型安全な開発、strictモード有効
 - **Node.js 16+** - 非同期I/O、ファイルシステム操作
+- **Express.js** - RESTful API サーバー
 - **Commander.js** - CLIフレームワーク
 - **Chalk 4.x** - ターミナル出力のスタイリング
+
+### フロントエンド
+- **Vanilla JavaScript** - フレームワーク不要のシンプル実装
+- **Modern CSS** - CSS Grid、Flexbox、アニメーション
+- **Responsive Design** - モバイルファースト設計
+- **REST API** - Fetch APIによる非同期通信
 
 ### 開発ツール
 - **Jest** - テストフレームワーク（カバレッジ70%以上）
