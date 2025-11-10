@@ -28,10 +28,6 @@ Enterprise-grade Full-Stack Task Management System built with TypeScript, Expres
   <p><em>デスクトップ表示 - グラデーション背景と直感的なUI</em></p>
 </div>
 
-<div align="center">
-  <img src="docs/images/image.png" alt="Web UI - Task Management" width="800"/>
-  <p><em>タスク管理画面 - リアルタイム統計とフィルタリング</em></p>
-</div>
 
 ### 💻 CLI版（ターミナル）
 
