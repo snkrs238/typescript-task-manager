@@ -19,6 +19,38 @@ Enterprise-grade Full-Stack Task Management System built with TypeScript, Expres
 - 🏗️ **クリーンアーキテクチャ**: SOLID原則に基づく設計
 - 🔒 **型安全**: TypeScriptによる堅牢な実装
 
+## 📸 スクリーンショット
+
+### 🌐 Web UI（モダンなインターフェース）
+
+<div align="center">
+  <img src="docs/images/image.png" alt="Web UI - Desktop View" width="800"/>
+  <p><em>デスクトップ表示 - グラデーション背景と直感的なUI</em></p>
+</div>
+
+<div align="center">
+  <img src="docs/images/web-ui-tasks.png" alt="Web UI - Task Management" width="800"/>
+  <p><em>タスク管理画面 - リアルタイム統計とフィルタリング</em></p>
+</div>
+
+### 💻 CLI版（ターミナル）
+
+<div align="center">
+  <img src="docs/images/cli-demo.png" alt="CLI Demo" width="700"/>
+  <p><em>CLIインターフェース - カラフルで見やすいターミナル表示</em></p>
+</div>
+
+### 主な特徴
+
+| 機能 | Web UI | CLI |
+|------|--------|-----|
+| タスク追加・削除 | ✅ | ✅ |
+| 完了切り替え | ✅ | ✅ |
+| フィルタリング | ✅ | ✅ |
+| リアルタイム統計 | ✅ | ❌ |
+| レスポンシブデザイン | ✅ | N/A |
+| カラフル表示 | ✅ | ✅ |
+
 ## 🏛️ アーキテクチャ
 
 ### 設計原則

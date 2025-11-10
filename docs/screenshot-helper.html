@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screenshot Placeholder Generator</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            max-width: 1200px;
+        }
+        .placeholder {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            padding: 60px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .placeholder h2 {
+            margin: 0 0 20px 0;
+            font-size: 2rem;
+        }
+        .placeholder p {
+            margin: 10px 0;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        .placeholder code {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+        .web-ui {
+            width: 100%;
+            aspect-ratio: 16/9;
+        }
+        .cli {
+            width: 100%;
+            aspect-ratio: 2/1;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        }
+        .instructions {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .instructions h3 {
+            margin-top: 0;
+        }
+        .instructions ol {
+            line-height: 1.8;
+        }
+        .button {
+            display: inline-block;
+            background: #3b82f6;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+        .button:hover {
+            background: #2563eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="instructions">
+            <h3>📸 スクリーンショット撮影ガイド</h3>
+            <ol>
+                <li>ターミナルで <code>npm run dev:server</code> を実行</li>
+                <li>ブラウザで <code>http://localhost:3000</code> を開く</li>
+                <li>いくつかタスクを追加して、1つを完了状態にする</li>
+                <li>⌘ + Shift + 4 → Spaceキー → ウィンドウをクリックして撮影</li>
+                <li>画像を <code>docs/images/</code> に保存</li>
+            </ol>
+            <a href="http://localhost:3000" class="button">Web UIを開く →</a>
+        </div>
+
+        <div class="placeholder web-ui">
+            <h2>🌐 Web UI - Desktop View</h2>
+            <p>メインインターフェース</p>
+            <p>グラデーション背景 + タスクリスト + 統計情報</p>
+            <p><code>web-ui-desktop.png</code></p>
+            <p style="font-size: 0.9rem; margin-top: 30px;">
+                推奨サイズ: 1440x900px | 形式: PNG
+            </p>
+        </div>
+
+        <div class="placeholder web-ui">
+            <h2>📋 Task Management Interface</h2>
+            <p>タスク管理画面</p>
+            <p>複数タスク + フィルター + インタラクション</p>
+            <p><code>web-ui-tasks.png</code></p>
+            <p style="font-size: 0.9rem; margin-top: 30px;">
+                推奨サイズ: 1440x900px | 形式: PNG
+            </p>
+        </div>
+
+        <div class="placeholder cli">
+            <h2>💻 CLI Demo</h2>
+            <p>ターミナルインターフェース</p>
+            <p>カラフルなコマンド出力 + タスク操作</p>
+            <p><code>cli-demo.png</code></p>
+            <p style="font-size: 0.9rem; margin-top: 30px;">
+                推奨サイズ: 1200x600px | 形式: PNG
+            </p>
+        </div>
+
+        <div class="instructions">
+            <h3>✅ チェックリスト</h3>
+            <ul style="list-style: none; padding-left: 0;">
+                <li>☐ Web UI デスクトップビュー撮影</li>
+                <li>☐ タスク管理画面撮影</li>
+                <li>☐ CLI デモ撮影</li>
+                <li>☐ 画像を最適化（TinyPNG等）</li>
+                <li>☐ <code>docs/images/</code> に保存</li>
+                <li>☐ Git commit & push</li>
+            </ul>
+            <p style="margin-top: 20px; padding: 15px; background: #f0f9ff; border-left: 4px solid #3b82f6; border-radius: 4px;">
+                <strong>💡 Tip:</strong> Macの場合、⌘ + Shift + 4 + Space で綺麗なウィンドウシャドウ付きのスクリーンショットが撮れます！
+            </p>
+        </div>
+    </div>
+</body>
+</html>
