@@ -1,10 +1,11 @@
-# 📝 Task CLI
+# � TypeScript Task Manager
 
-[![CI](https://github.com/fumi0428/task-cli/workflows/CI/badge.svg)](https://github.com/fumi0428/task-cli/actions)
+[![CI](https://github.com/snkrs238/typescript-task-manager/workflows/CI/badge.svg)](https://github.com/snkrs238/typescript-task-manager/actions)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Test Coverage](https://img.shields.io/badge/coverage-90%25-brightgreen.svg)](https://github.com/snkrs238/typescript-task-manager)
 
-プロフェッショナルなTypeScript実装によるコマンドラインタスク管理ツール
+Enterprise-grade Full-Stack Task Management System built with TypeScript, Express.js & Clean Architecture
 
 ## ✨ 主な機能
 
@@ -60,8 +61,8 @@ DELETE /api/tasks/completed    # 完了済みタスク一括削除
 
 ```bash
 # リポジトリをクローン
-git clone https://github.com/fumi0428/task-cli.git
-cd task-cli
+git clone https://github.com/snkrs238/typescript-task-manager.git
+cd typescript-task-manager
 
 # 依存関係をインストール
 npm install
@@ -210,7 +211,7 @@ MIT License
 
 ## 👤 作者
 
-fumi0428
+snkrs238 ([@snkrs238](https://github.com/snkrs238))
 
 ## � テスト
 
@@ -310,5 +311,3 @@ private validateTitle(title: string): boolean {
 5. プルリクエストを作成
 
 ---
-
-⭐ このプロジェクトが役立ったら、GitHubでスターをお願いします！

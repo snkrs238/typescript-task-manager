@@ -1,7 +1,7 @@
 {
-  "name": "task-cli",
+  "name": "typescript-task-manager",
   "version": "1.0.0",
-  "description": "A professional command-line task management tool built with TypeScript, featuring comprehensive testing and code quality tools",
+  "description": "Enterprise-grade Task Manager built with TypeScript, Express.js & Clean Architecture - Full-stack application with modern Web UI",
   "main": "dist/index.js",
   "bin": {
     "task": "./dist/index.js"
@@ -33,14 +33,14 @@
     "productivity",
     "task-management"
   ],
-  "author": "fumi0428",
+  "author": "snkrs238",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/fumi0428/task-cli.git"
+    "url": "https://github.com/snkrs238/typescript-task-manager.git"
   },
   "bugs": {
-    "url": "https://github.com/fumi0428/task-cli/issues"
+    "url": "https://github.com/snkrs238/typescript-task-manager/issues"
   },
   "engines": {
     "node": ">=16.0.0"
