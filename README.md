@@ -24,21 +24,21 @@ Enterprise-grade Full-Stack Task Management System built with TypeScript, Expres
 ### 🌐 Web UI（モダンなインターフェース）
 
 <div align="center">
-  <img src="docs/images/image.png" alt="Web UI - Desktop View" width="800"/>
+  <img src="docs/images/web-ui-desktop.png" alt="Web UI - Desktop View" width="800"/>
   <p><em>デスクトップ表示 - グラデーション背景と直感的なUI</em></p>
 </div>
 
 <div align="center">
-  <img src="docs/images/web-ui-tasks.png" alt="Web UI - Task Management" width="800"/>
+  <img src="docs/images/image.png" alt="Web UI - Task Management" width="800"/>
   <p><em>タスク管理画面 - リアルタイム統計とフィルタリング</em></p>
 </div>
 
 ### 💻 CLI版（ターミナル）
 
-<div align="center">
-  <img src="docs/images/cli-demo.png" alt="CLI Demo" width="700"/>
-  <p><em>CLIインターフェース - カラフルで見やすいターミナル表示</em></p>
-</div>
+> 📝 **Note**: CLIデモのスクリーンショットを追加する場合は、以下のコマンドで撮影してください：
+> ```bash
+> npm run dev list
+> ```
 
 ### 主な特徴
 
