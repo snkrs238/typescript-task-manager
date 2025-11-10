@@ -40,3 +40,9 @@ coverage/
 
 # OS
 Thumbs.db
+
+# Test files
+tests/.test-storage/
+
+# Husky
+.husky/_/

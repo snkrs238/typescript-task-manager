@@ -1,16 +1,45 @@
 # 📝 Task CLI
 
-TypeScriptで作成したシンプルなコマンドラインタスク管理ツール
+[![CI](https://github.com/fumi0428/task-cli/workflows/CI/badge.svg)](https://github.com/fumi0428/task-cli/actions)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## ✨ 機能
+プロフェッショナルなTypeScript実装によるコマンドラインタスク管理ツール
 
-- ✅ タスクの追加
-- 📋 タスクの一覧表示
-- ✓ タスクの完了/未完了切り替え
-- 🗑️ タスクの削除
-- 🧹 完了済みタスクの一括削除
-- 🎨 カラフルな表示
-- 💾 JSONファイルでデータ永続化
+## ✨ 主な機能
+
+- ✅ **タスク管理**: 追加・削除・完了切り替え
+- 📋 **柔軟なフィルタリング**: 全タスク・完了済み・未完了を表示
+- ✓ **バリデーション**: 入力検証とエラーハンドリング
+- 🗑️ **一括削除**: 完了済みタスクの効率的なクリア
+- 🎨 **カラフルなUI**: Chalkによる見やすい表示
+- 💾 **データ永続化**: JSONファイルによる保存
+- 🧪 **高いテストカバレッジ**: Jest による包括的なテスト
+- 🏗️ **クリーンアーキテクチャ**: SOLID原則に基づく設計
+- 🔒 **型安全**: TypeScriptによる堅牢な実装
+
+## 🏛️ アーキテクチャ
+
+### 設計原則
+
+- **依存性注入 (DI)**: `ITaskStorage`インターフェースによる疎結合
+- **単一責任の原則**: 各クラスが明確な責任を持つ
+- **インターフェース分離**: 必要最小限のメソッドのみを公開
+- **Result型パターン**: エラーハンドリングの型安全性を保証
+
+### プロジェクト構造
+
+```
+src/
+├── index.ts          # CLI エントリーポイント
+├── taskManager.ts    # ビジネスロジック層
+├── storage.ts        # データ永続化層
+└── types.ts          # 型定義・インターフェース
+
+tests/
+├── taskManager.test.ts  # ビジネスロジックのテスト
+└── storage.test.ts      # ストレージ層のテスト
+```
 
 ## 🚀 インストール
 
@@ -106,10 +135,24 @@ npm run watch
 
 ## 💡 技術スタック
 
-- **TypeScript** - 型安全な開発
+### コア技術
+- **TypeScript 5.0+** - 型安全な開発、strictモード有効
+- **Node.js 16+** - 非同期I/O、ファイルシステム操作
 - **Commander.js** - CLIフレームワーク
-- **Chalk** - カラフルなターミナル出力
-- **Node.js** - ランタイム環境
+- **Chalk 4.x** - ターミナル出力のスタイリング
+
+### 開発ツール
+- **Jest** - テストフレームワーク（カバレッジ70%以上）
+- **ESLint** - 静的コード解析
+- **Prettier** - コードフォーマッター
+- **Husky** - Git Hooks管理
+- **GitHub Actions** - CI/CD パイプライン
+
+### デザインパターン
+- **Dependency Injection** - テスタビリティ向上
+- **Repository Pattern** - データアクセス層の抽象化
+- **Result Pattern** - 型安全なエラーハンドリング
+- **Factory Pattern** - オブジェクト生成の柔軟性
 
 ## 📦 データ保存
 
@@ -125,9 +168,102 @@ MIT License
 
 fumi0428
 
-## 🤝 コントリビューション
+## � テスト
+
+```bash
+# テスト実行
+npm test
+
+# ウォッチモード
+npm run test:watch
+
+# カバレッジレポート生成
+npm run test:coverage
+```
+
+### テスト戦略
+- **ユニットテスト**: 各関数・メソッドの単体テスト
+- **統合テスト**: ストレージとの連携テスト
+- **モックオブジェクト**: 依存性の分離
+- **カバレッジ目標**: 70%以上（branches, functions, lines, statements）
+
+## 📊 コード品質
+
+```bash
+# 型チェック
+npm run type-check
+
+# リンター実行
+npm run lint
+
+# リンター自動修正
+npm run lint:fix
+
+# フォーマッター実行
+npm run format
+
+# フォーマットチェック
+npm run format:check
+```
+
+## 🚀 CI/CD
+
+GitHub Actionsによる自動化:
+- ✅ 自動テスト実行（Node.js 16, 18, 20）
+- ✅ 型チェック・リント・フォーマットチェック
+- ✅ テストカバレッジレポート生成
+- ✅ ビルド成果物の生成
+
+## 🎯 実装のポイント
+
+### 1. 型安全性
+```typescript
+// Result型によるエラーハンドリング
+interface Result<T, E = Error> {
+  success: boolean;
+  data?: T;
+  error?: E;
+}
+```
+
+### 2. 依存性注入
+```typescript
+// ストレージの抽象化
+interface ITaskStorage {
+  load(): Promise<TaskStore>;
+  save(store: TaskStore): Promise<void>;
+}
+
+// コンストラクタインジェクション
+class TaskManager {
+  constructor(private readonly storage: ITaskStorage) {}
+}
+```
+
+### 3. 非同期処理
+```typescript
+// 全てのI/O操作を非同期化
+async addTask(title: string): Promise<Result<Task>>
+```
+
+### 4. バリデーション
+```typescript
+// 入力検証の実装
+private validateTitle(title: string): boolean {
+  return title.trim().length > 0 && title.length <= 500;
+}
+```
+
+## �🤝 コントリビューション
 
 プルリクエストを歓迎します！バグ報告や機能要望もお気軽にIssueで報告してください。
+
+### 貢献方法
+1. このリポジトリをフォーク
+2. 機能ブランチを作成 (`git checkout -b feature/amazing-feature`)
+3. 変更をコミット (`git commit -m 'Add amazing feature'`)
+4. ブランチにプッシュ (`git push origin feature/amazing-feature`)
+5. プルリクエストを作成
 
 ---
 

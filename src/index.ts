@@ -2,8 +2,13 @@
 
 import { Command } from 'commander';
 import chalk from 'chalk';
-import * as taskManager from './taskManager';
-import { Task } from './types';
+import { TaskManager } from './taskManager';
+import { FileTaskStorage } from './storage';
+import { Task, TaskFilter } from './types';
+
+// Initialize dependencies
+const storage = new FileTaskStorage();
+const taskManager = new TaskManager(storage);
 
 const program = new Command();
 
@@ -12,7 +17,7 @@ function displayTask(task: Task): void {
   const status = task.completed ? chalk.green('✓') : chalk.red('○');
   const title = task.completed ? chalk.gray(task.title) : chalk.white(task.title);
   const id = chalk.cyan(`[${task.id}]`);
-  
+
   console.log(`${status} ${id} ${title}`);
 }
 
@@ -21,30 +26,33 @@ function displayTasks(tasks: Task[]): void {
     console.log(chalk.yellow('タスクがありません。'));
     return;
   }
-  
+
   console.log(chalk.bold('\n📝 タスク一覧:\n'));
   tasks.forEach(displayTask);
-  
-  const completed = tasks.filter(t => t.completed).length;
+
+  const completed = tasks.filter((t) => t.completed).length;
   const total = tasks.length;
   console.log(chalk.gray(`\n完了: ${completed}/${total}`));
 }
 
 // プログラムの設定
-program
-  .name('task')
-  .description('シンプルなタスク管理CLI')
-  .version('1.0.0');
+program.name('task').description('シンプルなタスク管理CLI').version('1.0.0');
 
 // タスクの追加
 program
   .command('add <title...>')
   .description('新しいタスクを追加')
-  .action((titleArray: string[]) => {
+  .action(async (titleArray: string[]) => {
     const title = titleArray.join(' ');
-    const task = taskManager.addTask(title);
-    console.log(chalk.green('✓ タスクを追加しました:'));
-    displayTask(task);
+    const result = await taskManager.addTask(title);
+
+    if (result.success && result.data) {
+      console.log(chalk.green('✓ タスクを追加しました:'));
+      displayTask(result.data);
+    } else {
+      console.log(chalk.red(`✗ エラー: ${result.error?.message}`));
+      process.exit(1);
+    }
   });
 
 // タスクの一覧表示
@@ -55,16 +63,23 @@ program
   .option('-a, --all', 'すべてのタスクを表示')
   .option('-c, --completed', '完了済みタスクのみ表示')
   .option('-p, --pending', '未完了タスクのみ表示')
-  .action((options) => {
-    let tasks = taskManager.getAllTasks();
-    
+  .action(async (options) => {
+    let filter = TaskFilter.ALL;
+
     if (options.completed) {
-      tasks = tasks.filter(t => t.completed);
+      filter = TaskFilter.COMPLETED;
     } else if (options.pending) {
-      tasks = tasks.filter(t => !t.completed);
+      filter = TaskFilter.PENDING;
     }
-    
-    displayTasks(tasks);
+
+    const result = await taskManager.getAllTasks(filter);
+
+    if (result.success && result.data) {
+      displayTasks(result.data);
+    } else {
+      console.log(chalk.red(`✗ エラー: ${result.error?.message}`));
+      process.exit(1);
+    }
   });
 
 // タスクの完了/未完了切り替え
@@ -72,20 +87,21 @@ program
   .command('toggle <id>')
   .alias('done')
   .description('タスクの完了/未完了を切り替え')
-  .action((id: string) => {
+  .action(async (id: string) => {
     const taskId = parseInt(id, 10);
     if (isNaN(taskId)) {
       console.log(chalk.red('✗ 無効なタスクIDです。'));
-      return;
+      process.exit(1);
     }
-    
-    const task = taskManager.toggleTask(taskId);
-    if (task) {
-      const status = task.completed ? '完了' : '未完了';
+
+    const result = await taskManager.toggleTask(taskId);
+    if (result.success && result.data) {
+      const status = result.data.completed ? '完了' : '未完了';
       console.log(chalk.green(`✓ タスクを${status}にしました:`));
-      displayTask(task);
+      displayTask(result.data);
     } else {
-      console.log(chalk.red(`✗ タスクID ${taskId} が見つかりません。`));
+      console.log(chalk.red(`✗ ${result.error?.message}`));
+      process.exit(1);
     }
   });
 
@@ -94,18 +110,19 @@ program
   .command('delete <id>')
   .alias('rm')
   .description('タスクを削除')
-  .action((id: string) => {
+  .action(async (id: string) => {
     const taskId = parseInt(id, 10);
     if (isNaN(taskId)) {
       console.log(chalk.red('✗ 無効なタスクIDです。'));
-      return;
+      process.exit(1);
     }
-    
-    const success = taskManager.deleteTask(taskId);
-    if (success) {
+
+    const result = await taskManager.deleteTask(taskId);
+    if (result.success) {
       console.log(chalk.green(`✓ タスクID ${taskId} を削除しました。`));
     } else {
-      console.log(chalk.red(`✗ タスクID ${taskId} が見つかりません。`));
+      console.log(chalk.red(`✗ ${result.error?.message}`));
+      process.exit(1);
     }
   });
 
@@ -113,19 +130,34 @@ program
 program
   .command('clear')
   .description('完了済みタスクをすべて削除')
-  .action(() => {
-    const count = taskManager.clearCompleted();
-    if (count > 0) {
-      console.log(chalk.green(`✓ ${count}件の完了済みタスクを削除しました。`));
+  .action(async () => {
+    const result = await taskManager.clearCompleted();
+    if (result.success && result.data !== undefined) {
+      if (result.data > 0) {
+        console.log(chalk.green(`✓ ${result.data}件の完了済みタスクを削除しました。`));
+      } else {
+        console.log(chalk.yellow('削除する完了済みタスクがありません。'));
+      }
     } else {
-      console.log(chalk.yellow('削除する完了済みタスクがありません。'));
+      console.log(chalk.red(`✗ エラー: ${result.error?.message}`));
+      process.exit(1);
     }
   });
 
 // デフォルトコマンド（引数なしの場合）
 if (process.argv.length === 2) {
-  const tasks = taskManager.getAllTasks();
-  displayTasks(tasks);
+  (async (): Promise<void> => {
+    const result = await taskManager.getAllTasks();
+    if (result.success && result.data) {
+      displayTasks(result.data);
+    } else {
+      console.log(chalk.red(`✗ エラー: ${result.error?.message}`));
+      process.exit(1);
+    }
+  })().catch((error: Error) => {
+    console.log(chalk.red(`✗ 予期しないエラー: ${error.message}`));
+    process.exit(1);
+  });
 } else {
   program.parse(process.argv);
 }
